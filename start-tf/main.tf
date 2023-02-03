@@ -21,9 +21,11 @@ output "file_bar" {
     value = data.local_file.bar
 }
 
+# vpc를 10.123.0.0/16으로 하나 생섬함
 resource "aws_vpc" "foo" {
-    cidr_block = "10.0.0.0/16"
-
+    cidr_block = "10.123.0.0/16"
+    
+    # VPC에 태그로 이름을 달아줌
     tags = {
         "Name" = "This is test VPC"
     }
@@ -31,4 +33,11 @@ resource "aws_vpc" "foo" {
 
 output "vpc_foo" {
     value = aws_vpc.foo
+}
+
+# 현재 vpc의 아이디를 모두 가져옴 (옵션으로 태그, 필터 가 있음)
+data "aws_vpcs" "this" {}
+
+output "vpcs" {
+    value = data.aws_vpcs.this
 }
