@@ -3,7 +3,11 @@ provider "aws" {
 }
 
 # 값 지정을 안하게 되면 apply 할 때에 입력하게 됨
-variable "vpc_name" {}
+variable "vpc_name" {
+  description = "생성되는 VPC의 이름을 정할 변수"
+  type        = "string"
+  default     = "default value를 지정하는 곳"
+}
 
 module "vpc" {
   source  = "tedilabs/network/aws//modules/vpc"
