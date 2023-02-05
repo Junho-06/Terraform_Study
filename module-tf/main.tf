@@ -12,6 +12,23 @@ variable "vpc_name" {
   default     = "default value를 지정하는 곳"
 }
 
+output "vpc_name" {
+  value = module.vpc.vpc_name
+}
+output "id" {
+  value = module.vpc.id
+}
+output "vpc_cidr" {
+  value = module.vpc.cidr_block
+}
+
+output "subnet_groups" {
+  value = {
+    public  = module.subnet_group__public
+    private = module.subnet_group__private
+  }
+}
+
 module "vpc" {
   source  = "tedilabs/network/aws//modules/vpc"
   version = "0.24.0"
