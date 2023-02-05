@@ -2,8 +2,11 @@ provider "aws" {
   region = "ap-northeast-2"
 }
 
+# 변수
 # 값 지정을 안하게 되면 apply 할 때에 입력하게 됨
 variable "vpc_name" {
+
+  # varialbe의 옵션
   description = "생성되는 VPC의 이름을 정할 변수"
   type        = "string"
   default     = "default value를 지정하는 곳"
@@ -22,7 +25,15 @@ module "vpc" {
   dns_hostnames_enabled = true
   dns_support_enabled   = true
 
-  tags = {}
+  tags = local.common_tags
+}
+
+# 여러번 사용되는 값들을 한 곳에서 관리하기 위한 로컬 변수
+locals {
+    common_tags = {
+        Project = "Network"
+        Owner   = "Junho"
+    }
 }
 
 module "subnet_group__public" {
@@ -44,7 +55,7 @@ module "subnet_group__public" {
     }
   }
 
-  tags = {}
+  tags = local.common_tags
 }
 
 module "subnet_group__private" {
@@ -66,7 +77,7 @@ module "subnet_group__private" {
     }
   }
 
-  tags = {}
+  tags = local.common_tags
 }
 
 module "route_table__public" {
@@ -85,7 +96,7 @@ module "route_table__public" {
     },
   ]
 
-  tags = {}
+  tags = local.common_tags
 }
 
 module "route_table__private" {
@@ -99,5 +110,5 @@ module "route_table__private" {
 
   ipv4_routes = []
 
-  tags = {}
+  tags = local.common_tags
 }
