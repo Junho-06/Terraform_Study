@@ -12,6 +12,7 @@ variable "vpc_name" {
   default     = "default value를 지정하는 곳"
 }
 
+# output은 sensitive, depends_on, description 의 옵션을 가질수 있음
 output "vpc_name" {
   value = module.vpc.vpc_name
 }
