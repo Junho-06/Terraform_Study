@@ -2,11 +2,15 @@ provider "aws" {
   region = "ap-northeast-2"
 }
 
+# 값 지정을 안하게 되면 apply 할 때에 입력하게 됨
+variable "vpc_name" {}
+
 module "vpc" {
   source  = "tedilabs/network/aws//modules/vpc"
   version = "0.24.0"
 
-  name                  = "fastcampus"
+                        # variable를 사용해서 이름 값을 넣어줌
+  name                  = var.vpc_name
   cidr_block            = "10.0.0.0/16"
 
   internet_gateway_enabled = true
