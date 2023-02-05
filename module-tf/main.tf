@@ -3,36 +3,36 @@ provider "aws" {
 }
 
 module "vpc" {
-  source = "tedilabs/network/aws//modules/vpc"
+  source  = "tedilabs/network/aws//modules/vpc"
   version = "0.24.0"
 
-  name = "fastcampus"
-  cidr_block = "10.0.0.0/16"
+  name                  = "fastcampus"
+  cidr_block            = "10.0.0.0/16"
 
   internet_gateway_enabled = true
 
-  dns_hostname_enabled = true
-  dns_support_enabled = true
+  dns_hostnames_enabled = true
+  dns_support_enabled   = true
 
   tags = {}
 }
 
 module "subnet_group__public" {
-  source = "tedilabs/network/aws//modules/subnet-group"
+  source  = "tedilabs/network/aws//modules/subnet-group"
   version = "0.24.0"
 
-  name = "${module.vpc.name}-public"
-  vpc_id = module.vpc.id
+  name                    = "${module.vpc.name}-public"
+  vpc_id                  = module.vpc.id
   map_public_ip_on_launch = true
 
   subnets = {
     "${module.vpc.name}-public-001/az1" = {
-        cidr_bloc = "10.0.0.0/24"
-        abailability_zone_id = "apne2-az1"
+      cidr_block           = "10.0.0.0/24"
+      availability_zone_id = "apne2-az1"
     }
     "${module.vpc.name}-public-002/az2" = {
-        cidr_bloc = "10.0.1.0/24"
-        abailability_zone_id = "apne2-az2"
+      cidr_block           = "10.0.1.0/24"
+      availability_zone_id = "apne2-az2"
     }
   }
 
@@ -40,21 +40,21 @@ module "subnet_group__public" {
 }
 
 module "subnet_group__private" {
-  source = "tedilabs/network/aws//modules/subnet-group"
+  source  = "tedilabs/network/aws//modules/subnet-group"
   version = "0.24.0"
 
-  name = "${module.vpc.name}-private"
-  vpc_id = module.vpc.id
+  name                    = "${module.vpc.name}-private"
+  vpc_id                  = module.vpc.id
   map_public_ip_on_launch = false
 
   subnets = {
     "${module.vpc.name}-private-001/az1" = {
-        cidr_bloc = "10.0.10.0/24"
-        abailability_zone_id = "apne2-az1"
+      cidr_block           = "10.0.10.0/24"
+      availability_zone_id = "apne2-az1"
     }
     "${module.vpc.name}-private-002/az2" = {
-        cidr_bloc = "10.0.11.0/24"
-        abailability_zone_id = "apne2-az2"
+      cidr_block           = "10.0.11.0/24"
+      availability_zone_id = "apne2-az2"
     }
   }
 
